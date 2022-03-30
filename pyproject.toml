@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 log_cli = true
 log_level = "DEBUG"
 testpaths = [
-  "src/textgrid_tools_tests",
+  "src/iterable_serialization_tests",
 ]
 # slows down debugging
 #addopts=-n8
