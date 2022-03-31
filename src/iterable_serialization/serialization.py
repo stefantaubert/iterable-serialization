@@ -1,4 +1,4 @@
-from typing import Generator, Iterable, Optional
+from typing import Iterable, Optional
 
 
 def serialize_iterable(iterable: Iterable[str], split_symbol: Optional[str] = None) -> str:
