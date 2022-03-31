@@ -1,4 +1,4 @@
-from typing import Iterable, Iterator
+from typing import Iterable
 from pytest import raises
 from iterable_serialization.serialization import deserialize_iterable
 
@@ -67,6 +67,11 @@ def test_aaa__empty__returns_a_a_a():
   assert iterables_are_equal(result, ("a", "a", "a"))
 
 
+def test_aaa__None__returns_a_a_a():
+  result = deserialize_iterable("aaa", None)
+  assert iterables_are_equal(result, ("a", "a", "a"))
+
+
 def test_aaa__X__returns_aaa():
   result = deserialize_iterable("aaa", "X")
   assert iterables_are_equal(result, ("aaa",))
@@ -105,3 +110,38 @@ def test_XXa__X__returns_X_a():
 def test_aXX__X__returns_a_X():
   result = deserialize_iterable("aXX", "X")
   assert iterables_are_equal(result, ("a", "X"))
+
+
+def test_XX__X__raises_value_error():
+  with raises(ValueError):
+    list(deserialize_iterable("XX", "X"))
+
+
+def test_aX__X__raises_value_error():
+  with raises(ValueError):
+    list(deserialize_iterable("aX", "X"))
+
+
+def test_Xa__X__raises_value_error():
+  with raises(ValueError):
+    list(deserialize_iterable("Xa", "X"))
+
+
+def test_aXXX__X__raises_value_error():
+  with raises(ValueError):
+    list(deserialize_iterable("aXXX", "X"))
+
+
+def test_XXXa__X__raises_value_error():
+  with raises(ValueError):
+    list(deserialize_iterable("XXXa", "X"))
+
+
+def test_a__1__raises_value_error():
+  with raises(ValueError):
+    list(deserialize_iterable("a", 1))
+
+
+def test_1__X__raises_value_error():
+  with raises(ValueError):
+    list(deserialize_iterable(1, "X"))

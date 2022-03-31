@@ -66,11 +66,13 @@ def deserialize_iterable(serialized_iterable: str, split_symbol: Optional[str] =
         yield_subsequent_split_symbol = True
     else:
       if no_of_subsequent_split_symbols % 2 == 0 and not last_char_was_non_split_symbol:
-        raise ValueError()
+        raise ValueError(
+          "Parameter 'serialized_iterable' can not be deserialized because the split_symbol occur subsequently on an even count!")
       no_of_subsequent_split_symbols = 0
       last_char_was_non_split_symbol = True
       symbol += char
   if not no_of_subsequent_split_symbols % 2 == 0:
-    raise ValueError()
+    raise ValueError(
+      "Parameter 'serialized_iterable' can not be deserialized because the split_symbol occur subsequently on an even count!")
   if symbol != "":
     yield symbol
