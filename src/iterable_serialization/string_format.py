@@ -1,9 +1,9 @@
 from enum import IntEnum
 from typing import Tuple
-from iterable_serialization.str_serialization import (can_deserialize_symbols,
-                                                      can_serialize_symbols,
-                                                      deserialize_symbols,
-                                                      serialize_symbols)
+from iterable_serialization.str_serialization import (can_deserialize_iterable,
+                                                      can_serialize_iterable,
+                                                      deserialize_iterable,
+                                                      serialize_iterable)
 
 
 DEFAULT_SPACED_SEP = " "
@@ -29,7 +29,7 @@ class StringFormat2(IntEnum):
 
 def can_convert_string_to_symbols(string: str, string_format: StringFormat2, sep: str) -> bool:
   if string_format == StringFormat2.SPACED:
-    return can_deserialize_symbols(string, sep)
+    return can_deserialize_iterable(string, sep)
   if string_format == StringFormat2.DEFAULT:
     return True
   assert False
@@ -37,7 +37,7 @@ def can_convert_string_to_symbols(string: str, string_format: StringFormat2, sep
 
 def can_convert_symbols_to_string(symbols: Tuple[str, ...], string_format: StringFormat2, sep: str) -> bool:
   if string_format == StringFormat2.SPACED:
-    return can_serialize_symbols(symbols, sep)
+    return can_serialize_iterable(symbols, sep)
   if string_format == StringFormat2.DEFAULT:
     return True
   assert False
@@ -55,7 +55,7 @@ def convert_string_to_symbols(string: str, string_format: StringFormat2, sep: st
   assert isinstance(string, str)
   assert isinstance(string_format, StringFormat2)
   if string_format == StringFormat2.SPACED:
-    return tuple(deserialize_symbols(string, sep))
+    return tuple(deserialize_iterable(string, sep))
   if string_format == StringFormat2.DEFAULT:
     return convert_text_string_to_symbols(string)
   assert False
@@ -65,7 +65,7 @@ def convert_symbols_to_string(symbols: Tuple[str, ...], string_format: StringFor
   assert isinstance(symbols, tuple)
   assert isinstance(string_format, StringFormat2)
   if string_format == StringFormat2.SPACED:
-    return serialize_symbols(symbols, sep)
+    return serialize_iterable(symbols, sep)
   if string_format == StringFormat2.DEFAULT:
     return convert_symbols_to_text_string(symbols)
   assert False

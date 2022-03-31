@@ -1,23 +1,24 @@
 from typing import Generator, Iterable
 
-
-def can_serialize_symbols(symbols: Iterable[str], split_symbol: str) -> bool:
-  for symbol in symbols:
+def can_serialize_iterable(iterable: Iterable[str], split_symbol: str) -> bool:
+  for symbol in iterable:
     if split_symbol in symbol and symbol != split_symbol:
       return False
   return True
 
 
-def serialize_symbols(symbols: Iterable[str], split_symbol: str) -> str:
+def serialize_iterable(iterable: Iterable[str], split_symbol: str) -> str:
+  if not isinstance(iterable, Iterable):
+    raise ValueError("No iterable was passed!")
   assert len(split_symbol) == 1
-  text = split_symbol.join(symbols)
+  text = split_symbol.join(iterable)
   return text
 
 
-def can_deserialize_symbols(text: str, split_symbol: str) -> bool:
+def can_deserialize_iterable(serialized_iterable: str, split_symbol: str) -> bool:
   no_of_subsequent_split_symbols = 1
   last_char_was_non_split_symbol = False
-  for char in text:
+  for char in serialized_iterable:
     if char == split_symbol:
       no_of_subsequent_split_symbols += 1
       last_char_was_non_split_symbol = False
@@ -31,12 +32,12 @@ def can_deserialize_symbols(text: str, split_symbol: str) -> bool:
   return False
 
 
-def deserialize_symbols(text: str, split_symbol: str) -> Generator[str, None, None]:
+def deserialize_iterable(serialized_iterable: str, split_symbol: str) -> Generator[str, None, None]:
   #assert can_deserialize(text, split_symbol)
   assert len(split_symbol) == 1
   symbol = ""
   yield_subsequent_split_symbol = None
-  for char in text:
+  for char in serialized_iterable:
     if char == split_symbol:
       if symbol == "":
         if yield_subsequent_split_symbol is None:
