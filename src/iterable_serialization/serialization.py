@@ -29,15 +29,20 @@ def serialize_iterable(iterable: Iterable[str], split_symbol: Optional[str] = No
   return result
 
 
-def deserialize_iterable(serialized_iterable: str, split_symbol: Optional[str] = None) -> Generator[str, None, None]:
+def deserialize_iterable(serialized_iterable: str, split_symbol: Optional[str] = None) -> Iterable[str]:
   if not isinstance(serialized_iterable, str):
     raise ValueError("Parameter 'serialized_iterable' needs to be of type 'str'!")
   if split_symbol is None or split_symbol == "":
     yield from serialized_iterable
+    return
+    yield
   if not isinstance(split_symbol, str):
     raise ValueError("Parameter 'split_symbol' needs to be of type 'str'!")
   if not len(split_symbol) == 1:
     raise ValueError("Parameter 'split_symbol' needs to be exactly one character!")
+  if serialized_iterable == "":
+    return
+    yield
   symbol = ""
   no_of_subsequent_split_symbols = 1
   last_char_was_non_split_symbol = False

@@ -204,6 +204,13 @@ def test_can_deserialize__five_spaces_in_between():
 
   assert res
 
+
+def test_can_deserialize_empty__five_spaces_in_between():
+  text = ""
+  res = can_deserialize_iterable(text, " ")
+
+  assert res
+
 # spaces at beginning
 
 

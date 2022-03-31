@@ -1,4 +1,3 @@
-
 from pytest import raises
 from iterable_serialization.serialization import serialize_iterable
 
@@ -71,6 +70,31 @@ def test_aa_aa__X__returns_aaXaa():
 def test_aa_aa__empty__returns_aaaa():
   result = serialize_iterable(("aa", "aa"), "")
   assert result == "aaaa"
+
+
+def test_X_a__X__returns_XXa():
+  result = serialize_iterable(("X", "a"), "X")
+  assert result == "XXa"
+
+
+def test_a_X__X__returns_aXX():
+  result = serialize_iterable(("a", "X"), "X")
+  assert result == "aXX"
+
+
+def test_X__X__returns_X():
+  result = serialize_iterable(("X"), "X")
+  assert result == "X"
+
+
+def test_X_X__X__returns_XXX():
+  result = serialize_iterable(("X", "X"), "X")
+  assert result == "XXX"
+
+
+def test_X_X_X__X__returns_XXXXX():
+  result = serialize_iterable(("X", "X", "X"), "X")
+  assert result == "XXXXX"
 
 
 def test_number__X__raises_value_error():
