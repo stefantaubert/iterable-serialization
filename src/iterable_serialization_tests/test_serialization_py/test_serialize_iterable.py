@@ -2,6 +2,11 @@ from pytest import raises
 from iterable_serialization.serialization import serialize_iterable
 
 
+def test_component_a_bb_X__X__returns_aXbbXX():
+  result = serialize_iterable(("a", "bb", "X"), "X")
+  assert result == "aXbbXX"
+
+
 def test_empty__X__returns_empty():
   result = serialize_iterable((), "X")
   assert result == ""
