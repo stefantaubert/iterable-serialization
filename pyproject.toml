@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "iterable-serialization"
 version = "0.0.1"
-description = "Serialization/deserialization of iterables of type 'str' to a single string."
+description = "Serialization and deserialization of iterables with elements of type 'str' from and to a string; similar to 'str.join(...)'."
 readme = "README.md"
 requires-python = ">=3.6"
 license = {text = "MIT"}

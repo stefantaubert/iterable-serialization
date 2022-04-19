@@ -1,59 +1,73 @@
 # iterable-serialization
 
-Serialization/deserialization of iterables of type `str`.
+[![PyPI](https://img.shields.io/pypi/v/iterable-serialization.svg)](https://pypi.python.org/pypi/iterable-serialization)
+[![PyPI](https://img.shields.io/pypi/pyversions/iterable-serialization.svg)](https://pypi.python.org/pypi/iterable-serialization)
+[![MIT](https://img.shields.io/github/license/stefantaubert/iterable-serialization.svg)](LICENSE)
 
-This package aims to be a better version of:
+Serialization and deserialization of iterables with elements of type `str` from and to a string; similar to `str.join(...)`.
+
+This package aims to be an improved version of:
 
 ```python
-serialized = "|".join(("a", "b", "c"))
-print(serialized)
-# a|b|c
+# serialization
+>>> serialized = "|".join(("a", "b", "c"))
+>>> serialized
+'a|b|c'
 
-deserialized = serialized.split("|")
-print(deserialized)
-# ['a', 'b', 'c']
+# deserialization
+>>> deserialized = serialized.split("|")
+>>> deserialized
+['a', 'b', 'c']
 ```
 
 It makes it possible to serialize/deserialize an iterable with occurring symbols as separator:
 
 ```python
-serialized = serialize_iterable(("a", "b", "c"), "a")
-print(serialized)
-# aabac
+>>> from iterable_serialization import deserialize_iterable, serialize_iterable
 
-deserialized = deserialize_iterable(serialized, "a")
-print(list(deserialized))
-# ['a', 'b', 'c']
+# serialization
+>>> serialized = serialize_iterable(("a", "b", "c"), "a")
+>>> serialized
+'aabac'
+
+# deserialization
+>>> deserialized = deserialize_iterable(serialized, "a")
+>>> tuple(deserialized)
+('a', 'b', 'c')
 ```
 
 With the version above, it would result in a wrong deserialization result:
 
 ```python
-serialized = "a".join(("a", "b", "c"))
-print(serialized)
-# aabac
+# serialization
+>>> serialized = "a".join(("a", "b", "c"))
+>>> serialized
+'aabac'
 
-deserialized = serialized.split("a")
-print(list(deserialized))
-# ['', '', 'b', 'c']
+# deserialization
+>>> deserialized = serialized.split("a")
+>>> deserialized
+['', '', 'b', 'c']
 ```
 
 ## Installation
 
 ```sh
-pipenv install -e git+https://github.com/stefantaubert/iterable-serialization.git@master#egg=iterable_serialization
+pip install iterable-serialization
 ```
 
 ## Usage
 
 ```python
-from iterable_serialization import deserialize_iterable, serialize_iterable
+>>> from iterable_serialization import deserialize_iterable, serialize_iterable
 
-serialized = serialize_iterable(("a", "b", "c"), "a")
-print(serialized)
-# aabac
+# serialization
+>>> serialized = serialize_iterable(("a", "b", "c"), "a")
+>>> serialized
+'aabac'
 
-deserialized = deserialize_iterable(serialized, "a")
-print(list(deserialized))
-# ['a', 'b', 'c']
+# deserialization
+>>> deserialized = deserialize_iterable(serialized, "a")
+>>> tuple(deserialized)
+('a', 'b', 'c')
 ```
